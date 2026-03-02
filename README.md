@@ -19,11 +19,11 @@ project/
 │   └── results/             # Simulation outputs & sensitivity plots
 ├── src/
 │   ├── engine/
-│   │   ├── monte_carlo.py   # Multi-stage shard/token simulation
-│   │   ├── curves.py        # Pity/Soft-pity curve functions (linear/exp)
+│   │   ├── monte_carlo.py   # Multi-stage & Step-Up simulation core
+│   │   ├── curves.py        # Pity/Soft-pity & Step-Up curve functions
 │   │   └── validator.py     # Module 0: Geometric Baseline & Chi-Squared
 │   ├── metrics/
-│   │   ├── risk_metrics.py  # CTE, Kurtosis, WRR
+│   │   ├── risk_metrics.py  # CTE, WRR, Safety Net Tax
 │   │   ├── retention.py     # SRI, OCA, Recovery Interest
 │   │   ├── friction.py      # IG, Top-Up Pressure, LAI (Sunk Cost)
 │   │   └── utility_decay.py # Meta-Relevance & Subscription Equivalence
@@ -33,6 +33,7 @@ project/
 │   ├── utils/
 │   │   ├── config_loader.py # JSON Schema validation for configs
 │   │   ├── reporter.py      # Forensic reporting engine
+│   │   ├── fact_sheet.py    # Standardized PDF/A-ready export
 │   │   └── community_ingestor.py # Observed data ingestion
 │   ├── app.py               # Streamlit Forensic Dashboard
 │   ├── run_analysis.py      # CLI runner for monetization analysis
@@ -80,7 +81,7 @@ $env:PYTHONPATH = "."; uv run main.py --help
 **3. Monetization Risk Analysis**
 Analyze a banner's volatility and tail risk with CDF visualization and forensic reporting:
 ```powershell
-uv run main.py monetization --config data/loot_configs/standard_banner.json --plot --report
+uv run main.py monetization --config data/loot_configs/standard_banner.json --plot --report --factsheet
 ```
 
 **4. State of the Tail (Big Three Comparative Audit)**
@@ -113,14 +114,16 @@ uv run main.py audit
 
 ### Module 0: Integrity & Investigation
 - **Geometric Baseline:** Validates that static probability simulations converge to $E[N] = 1/p$ within <0.5% deviation.
+- **Step-Up Support:** Engine handles variable costs and probabilities per trial, modeling the "Step-Up Trap" where costs inflate as acquisition nears.
 - **Community Data Validation:** Uses **Chi-Squared Goodness-of-Fit** to compare observed community pull data (scraped from Reddit/YouTube) against simulated expectations to detect **"Silent Nerfs."**
 
 ### Module 1: Tail Risk (CTE₉₅ & WRR)
 Instead of "Average Cost," we focus on **Asymmetric Variance Exposure**:
 - **CTE₉₅:** Average cost for the "unlucky" 5%.
 - **WRR (Whale Revenue Ratio):** $CTE_{95} / \text{Median}$. Quantifies revenue reliance on extreme outliers.
+- **Safety Net Tax (SNT):** Quantifies the premium players pay for the variance protection of pity systems.
 - **Utility Decay:** Translates one-time purchases into a daily **Meta-Relevance Cost**, showing the "subscription equivalent" of items that power-creep over time.
-- **Forensic Reporting:** Generates human-readable Markdown reports contextualizing costs as **Days of Median Labor** across global regions.
+- **Forensic Reporting:** Generates human-readable Markdown reports and **Standardized Fact Sheets** contextualizing costs as **Days of Median Labor** across global regions.
 
 ### Module 3: Friction & Obfuscation
 - **Incentive Gap (IG):** Measures forced surplus spending by comparing required costs to available currency packs.
@@ -134,8 +137,9 @@ Instead of "Average Cost," we focus on **Asymmetric Variance Exposure**:
 The **Streamlit Forensic Dashboard** provides a high-visibility interface for:
 - **Interactive CDF Analysis:** Visualize the probability of success vs. total cost.
 - **Economic Pain Index:** Translate virtual costs into working days adjusted for **Purchasing Power Parity (PPP)**.
-- **Multi-Stage Acquisition:** Support for shards/tokens and fragmented progression modeling.
+- **Multi-Stage & Step-Up Acquisition:** Support for shards/tokens and variable trial costs/probabilities.
 - **Community Validation Engine:** Upload observed data to detect statistical discrepancies in published odds.
+- **Forensic Documentation:** Generate and download **Standardized Fact Sheets** directly from the UI.
 - **Psychological Pressure Simulation:** Toggle **Social Proof Bias** and **Loss Aversion** sliders to see how behavioral hacks affect perceived value.
 - **State of the Tail Comparative Audit:** Side-by-side comparison of major F2P titles.
 

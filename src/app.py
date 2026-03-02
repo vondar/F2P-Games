@@ -11,6 +11,8 @@ from src.metrics.risk_metrics import calculate_risk_metrics
 from src.metrics.friction import calculate_loss_aversion_index
 from src.utils.config_loader import load_loot_config
 from src.utils.community_ingestor import ingest_community_data, calculate_distribution_counts
+from src.utils.fact_sheet import generate_fact_sheet
+from src.utils.reporter import generate_forensic_summary
 
 st.set_page_config(page_title="F2P Forensic Dashboard", layout="wide")
 
@@ -156,6 +158,18 @@ if st.sidebar.button("Run Forensic Analysis"):
                           title="Economic Pain Index: Labor Days Adjusted for Purchasing Power",
                           labels={"Days": "Working Days (Pain Adjusted)"})
         st.plotly_chart(fig_labor, use_container_width=True)
+
+        st.divider()
+        st.subheader("📑 Forensic Documentation")
+        if st.button("Generate Standardized Fact Sheet"):
+            results = {"metrics": metrics, "sim_data": sim_data, "config": config}
+            system_name = selected_config_file.replace(".json", "")
+            report_content = generate_forensic_summary(results, geo_data)
+            fact_sheet_path = os.path.join("data/results/", f"fact_sheet_{system_name.replace(' ', '_')}.md")
+            generate_fact_sheet(results, report_content, fact_sheet_path)
+            st.success(f"Standardized Fact Sheet generated at {fact_sheet_path}")
+            with open(fact_sheet_path, "r") as f:
+                st.download_button("Download Fact Sheet (Markdown)", f, file_name=f"fact_sheet_{system_name}.md")
 
         if show_raw_data:
             st.divider()

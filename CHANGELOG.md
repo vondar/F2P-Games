@@ -85,6 +85,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for launching the dashboard via `main.py dashboard`.
 - Enhanced `geo_configs.json` with Minimum Wage data points.
 
+## [0.9.0] - 2026-03-02
+
+### Added
+- **Step-Up Sequence Support**: Engine now handles variable costs and probabilities per trial, modeling the "Step-Up Trap."
+- **Standardized Forensic Fact Sheet**: Automated generation of Markdown/PDF-ready reports for consumer protection.
+- **Safety Net Tax (SNT)**: New metric to quantify how much players pay for the variance protection of pity systems.
+- **Fact Sheet Download**: Integrated report generation and download button in the Dashboard.
+- **Acquisition Cost Tracking**: Monte Carlo engine now returns total USD cost per iteration, accounting for step-up inflation.
+
+### Fixed
+- Backward compatibility for `calculate_risk_metrics` to support both legacy and v0.9.0 data formats.
+- Corrected audit trail linking in generated fact sheets.
+
 ### Fixed
 - Dependencies updated to include `streamlit` and `plotly` for visualization.
 

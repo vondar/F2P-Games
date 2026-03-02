@@ -56,6 +56,10 @@ This document tracks the implementation progress, encountered problems, and solu
 - [x] Calculate **Loss Aversion Index (LAI)** to quantify psychological sunk cost
 - [x] Update labor-cost metrics with **Purchasing Power Parity (PPP)** factors
 - [x] Integrate Community Validation and LAI into the Forensic Dashboard
+- [x] Update `curves.py` and `monte_carlo.py` to support **Step-Up sequences** (Variable Cost/Prob)
+- [x] Implement standardized **Forensic Fact Sheet** export (`src/utils/fact_sheet.py`)
+- [x] Integrate **Fact Sheet** generation and download into the Dashboard
+- [x] Implement **Safety Net Tax (SNT)** to quantify the cost of variance protection
 
 ## Problems & Solutions
 
