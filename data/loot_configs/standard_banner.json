@@ -6,5 +6,6 @@
     "start": 74,
     "end": 90,
     "target_prob": 1.0
-  }
+  },
+  "cost_per_pull_usd": 1.6
 }

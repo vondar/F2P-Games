@@ -1,5 +1,6 @@
 {
   "system_name": "Module 0 Calibration",
   "base_prob": 0.01,
-  "pity_config": null
+  "pity_config": null,
+  "cost_per_pull_usd": 1.0
 }

@@ -7,5 +7,6 @@
     "end": 100,
     "target_prob": 1.0,
     "notes": "Simulating a piecewise growth where soft-pity ramps significantly after 50 trials."
-  }
+  },
+  "cost_per_pull_usd": 1.2
 }
