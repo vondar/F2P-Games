@@ -82,7 +82,7 @@ if st.sidebar.button("Run Forensic Analysis"):
         # --- Layout: Transparency Grade ---
         st.divider()
         grade_color = "green" if metrics['transparency_grade'] in ['A', 'B'] else "orange" if metrics['transparency_grade'] == 'C' else "red"
-        st.markdown(f"<h2 style='text-align: center;'>Transparency Grade: <span style='color: {grade_color};'>{metrics['transparency_grade']}</span></h2>", unsafe_allow_color=True)
+        st.markdown(f"<h2 style='text-align: center;'>Transparency Grade: <span style='color: {grade_color};'>{metrics['transparency_grade']}</span></h2>", unsafe_allow_html=True)
         st.progress(metrics['transparency_score'] / 100.0)
         
         # --- Layout: Key Forensic Metrics ---
