@@ -13,7 +13,7 @@
       "maximum": 1.0
     },
     "pity_config": {
-      "type": "object",
+      "type": ["object", "null"],
       "properties": {
         "type": {
           "type": "string",

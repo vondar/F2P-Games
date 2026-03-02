@@ -36,7 +36,7 @@ def load_loot_config(file_path):
                 
     # Forensic Sanity Checks
     base_prob = config.get("base_prob", 0.0)
-    if base_prob <= 0 or base_prob > 1.0:
+    if base_prob < 0 or base_prob > 1.0:
         raise ValueError(f"Nonsensical Architecture: base_prob must be between 0 and 1. Found: {base_prob}")
         
     cost = config.get("cost_per_pull_usd", 0.0)
