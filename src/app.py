@@ -43,7 +43,8 @@ uploaded_file = st.sidebar.file_uploader("Upload Observed Pull Data (CSV/JSON)",
 # --- Simulation & Core Metrics ---
 config = load_loot_config(os.path.join(config_dir, selected_config_file))
 
-base_prob = st.sidebar.slider("Base Probability", 0.001, 0.05, config.get("base_prob", 0.01), format="%.3f")
+base_prob_val = float(config.get("base_prob", 0.01))
+base_prob = st.sidebar.slider("Base Probability", 0.000, 0.100, base_prob_val, format="%.3f", step=0.001)
 threshold = st.sidebar.number_input("Acquisition Threshold (Shards)", min_value=1, value=config.get("acquisition_threshold", 1))
 iterations = st.sidebar.select_slider("Iterations", options=[10000, 50000, 100000], value=50000)
 cost_per_pull = st.sidebar.number_input("Cost per Pull ($)", value=config.get("cost_per_pull_usd", 1.0))
@@ -65,9 +66,10 @@ if st.sidebar.button("Run Forensic Analysis"):
         sim_data = run_monte_carlo_sim(
             base_prob=base_prob,
             iterations=iterations,
-            pity_config=config.get("pity_config"),
+            pity_config=effective_pity,
             seed=42,
-            acquisition_threshold=threshold
+            acquisition_threshold=threshold,
+            base_cost_usd=cost_per_pull
         )
         
         # Social Proof Simulation
