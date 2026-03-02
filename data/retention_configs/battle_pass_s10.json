@@ -1,0 +1,11 @@
+{
+  "season_name": "Season 10 - Battle Pass",
+  "total_xp_required": 10000,
+  "daily_free_xp": 100,
+  "weekly_free_xp": 500,
+  "season_duration_days": 60,
+  "login_windows": [
+    {"start": 12, "end": 14},
+    {"start": 19, "end": 21}
+  ]
+}

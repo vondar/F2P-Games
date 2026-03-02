@@ -1,0 +1,10 @@
+{
+  "system_name": "Standard Banner - SSR",
+  "base_prob": 0.006,
+  "pity_config": {
+    "type": "linear",
+    "start": 74,
+    "end": 90,
+    "target_prob": 1.0
+  }
+}

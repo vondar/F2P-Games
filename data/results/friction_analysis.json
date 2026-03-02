@@ -1,0 +1,31 @@
+{
+    "metadata": {
+        "system_name": "Premium Gem Shop",
+        "config": {
+            "system_name": "Premium Gem Shop",
+            "required_acquisition_cost": 2500,
+            "available_packs": [
+                99,
+                499,
+                999,
+                1999,
+                4999,
+                9999
+            ],
+            "exchange_rates": {
+                "USD_TO_GEM": 1.64,
+                "GEM_TO_TOKEN": 2.5,
+                "TOKEN_TO_FRAGMENT": 10.0
+            }
+        }
+    },
+    "incentive_gap": {
+        "ig": 501.0,
+        "closest_lower_pack": 1999.0,
+        "required_cost": 2500.0
+    },
+    "conversion_obfuscation": {
+        "conversion_complexity_score": 4.0,
+        "num_exchange_steps": 3
+    }
+}

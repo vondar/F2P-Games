@@ -1,0 +1,28 @@
+{
+  "regions": {
+    "USA": {
+      "median_daily_income_usd": 150.0,
+      "minimum_daily_income_usd": 58.0,
+      "ppp_factor": 1.0,
+      "currency": "USD"
+    },
+    "India": {
+      "median_daily_income_usd": 5.0,
+      "minimum_daily_income_usd": 2.2,
+      "ppp_factor": 0.3,
+      "currency": "INR"
+    },
+    "Brazil": {
+      "median_daily_income_usd": 15.0,
+      "minimum_daily_income_usd": 9.5,
+      "ppp_factor": 0.5,
+      "currency": "BRL"
+    },
+    "Vietnam": {
+      "median_daily_income_usd": 10.0,
+      "minimum_daily_income_usd": 6.5,
+      "ppp_factor": 0.4,
+      "currency": "VND"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "system_name": "Premium Gem Shop",
+  "base_prob": 0,
+  "required_acquisition_cost": 2500,
+  "available_packs": [99, 499, 999, 1999, 4999, 9999],
+  "exchange_rates": {
+    "USD_TO_GEM": 1.64,
+    "GEM_TO_TOKEN": 2.5,
+    "TOKEN_TO_FRAGMENT": 10.0
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "system_name": "PUBG Mobile - Premium Crate (Legendary)",
+  "base_prob": 0.005,
+  "pity_config": {
+    "type": "linear",
+    "start": 1,
+    "end": 120,
+    "target_prob": 0.02,
+    "notes": "Simulating the sparse but slightly ramping legendary odds in standard crates."
+  },
+  "cost_per_pull_usd": 1.2,
+  "game": "PUBG Mobile"
+}

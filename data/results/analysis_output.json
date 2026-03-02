@@ -1,0 +1,29 @@
+{
+    "metadata": {
+        "system_name": "Free Fire - Diamond Royale (Grand Prize)",
+        "iterations": 100000,
+        "seed": 42,
+        "config": {
+            "system_name": "Free Fire - Diamond Royale (Grand Prize)",
+            "base_prob": 0.007,
+            "pity_config": {
+                "type": "linear",
+                "start": 50,
+                "end": 100,
+                "target_prob": 1.0,
+                "notes": "Free Fire uses 'Luck' counters that ramp significantly, often guaranteeing by 100-200."
+            },
+            "cost_per_pull_usd": 0.8,
+            "game": "Free Fire"
+        },
+        "timestamp": "2026-03-02T19:34:32.747746"
+    },
+    "risk_metrics": {
+        "median": 55.0,
+        "p95": 65.0,
+        "cte95": 67.81405054486436,
+        "wrr": 1.232982737179352,
+        "kurtosis": 0.3637473505171487,
+        "confidence_budget_95": 65.0
+    }
+}

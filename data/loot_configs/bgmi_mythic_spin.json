@@ -1,0 +1,12 @@
+{
+  "system_name": "BGMI - Super Wonder Spin (Mythic)",
+  "base_prob": 0.003,
+  "pity_config": {
+    "type": "exponential",
+    "start": 100,
+    "factor": 1.05,
+    "notes": "BGMI spins often use exponential growth in tokens or direct odds after a high threshold."
+  },
+  "cost_per_pull_usd": 1.5,
+  "game": "BGMI"
+}
