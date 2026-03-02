@@ -27,8 +27,14 @@ def calculate_risk_metrics(sim_data_dict):
     tail_95 = trials[trials >= p95_val]
     cte95 = np.mean(tail_95)
     
+    # Cost-based metrics (v0.9.0)
+    median_cost = np.median(costs)
+    p95_cost = np.percentile(costs, 95)
+    tail_costs = costs[costs >= p95_cost]
+    cte95_cost = np.mean(tail_costs)
+
     # Whale Revenue Ratio (WRR)
-    wrr = cte95 / median_val if median_val > 0 else 1.0
+    wrr = cte95_cost / median_cost if median_cost > 0 else 1.0
     
     # Safety Net Tax (SNT)
     std_dev = np.std(trials)
@@ -41,6 +47,9 @@ def calculate_risk_metrics(sim_data_dict):
         "median": int(median_val),
         "p95": int(p95_val),
         "cte95": float(cte95),
+        "median_cost": float(median_cost),
+        "p95_cost": float(p95_cost),
+        "cte95_cost": float(cte95_cost),
         "wrr": float(wrr),
         "kurtosis": float(0.0), 
         "confidence_budget_95": int(p95_cost_percentile(trials, 0.95)),

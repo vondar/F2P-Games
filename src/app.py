@@ -88,9 +88,9 @@ if st.sidebar.button("Run Forensic Analysis"):
         # --- Layout: Key Forensic Metrics ---
         col1, col2, col3, col4 = st.columns(4)
         
-        median_cost = metrics['median'] * cost_per_pull
-        p95_cost = metrics['p95'] * cost_per_pull
-        cte95_cost = metrics['cte95'] * cost_per_pull
+        median_cost = metrics['median_cost']
+        p95_cost = metrics['p95_cost']
+        cte95_cost = metrics['cte95_cost']
         wrr = metrics['wrr']
         
         col1.metric("Median Cost", f"${median_cost:,.2f}")
@@ -132,7 +132,7 @@ if st.sidebar.button("Run Forensic Analysis"):
             else:
                 # Calculate counts for test
                 obs_counts, bins = calculate_distribution_counts(obs_data)
-                exp_counts, _ = calculate_distribution_counts(sim_data, bins=bins)
+                exp_counts, _ = calculate_distribution_counts(sim_data["trials"], bins=bins)
                 
                 chi_results = perform_chi_squared_test(obs_counts, exp_counts)
                 
@@ -149,7 +149,7 @@ if st.sidebar.button("Run Forensic Analysis"):
 
         # --- Visualization: Tail Risk CDF ---
         st.subheader("📈 The 'Confidence Budget' Curve")
-        x_sorted = np.sort(sim_data) * cost_per_pull
+        x_sorted = np.sort(sim_data["costs"])
         y_cdf = np.arange(len(x_sorted)) / float(len(x_sorted))
         
         fig_cdf = px.line(x=x_sorted, y=y_cdf, labels={'x': 'Total Cost ($)', 'y': 'Probability of Success'})

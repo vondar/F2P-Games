@@ -14,11 +14,10 @@ def generate_forensic_summary(results_data, geo_data=None):
     
     system_name = metadata.get("system_name", "Unknown System")
     game_name = config.get("game", "Unknown Game")
-    cost_per_pull = config.get("cost_per_pull_usd", 1.0)
     
-    median_cost = risk.get("median", 0) * cost_per_pull
-    p95_cost = risk.get("p95", 0) * cost_per_pull
-    cte95_cost = risk.get("cte95", 0) * cost_per_pull
+    median_cost = risk.get("median_cost", 0.0)
+    p95_cost = risk.get("p95_cost", 0.0)
+    cte95_cost = risk.get("cte95_cost", 0.0)
     wrr = risk.get("wrr", 1.0)
     
     # Header
