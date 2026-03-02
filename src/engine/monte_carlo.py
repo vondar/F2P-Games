@@ -1,5 +1,5 @@
 import numpy as np
-from src.engine.curves import get_pity_prob
+from src.engine.curves import get_pity_prob, get_trial_cost
 
 def run_monte_carlo_sim(base_prob, iterations=100000, pity_config=None, seed=42, acquisition_threshold=1, base_cost_usd=1.0):
     """

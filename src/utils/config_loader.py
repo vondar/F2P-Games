@@ -31,7 +31,8 @@ def load_loot_config(file_path):
             try:
                 validate(instance=config, schema=schema)
             except ValidationError as e:
-                raise ValueError(f"Loot config schema validation failed: {e.message}")
+                # Provide a more helpful error message including the file being validated
+                raise ValueError(f"Loot config schema validation failed in {os.path.basename(file_path)}: {e.message}")
                 
     # Forensic Sanity Checks
     base_prob = config.get("base_prob", 0.0)
