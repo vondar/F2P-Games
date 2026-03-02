@@ -31,20 +31,50 @@ def calculate_risk_metrics(sim_data_dict):
     wrr = cte95 / median_val if median_val > 0 else 1.0
     
     # Safety Net Tax (SNT)
-    # Comparison: Standard Deviation vs. Expected Value
-    # High SNT means the system uses pity to tighten variance while potentially raising median.
     std_dev = np.std(trials)
     safety_net_tax = std_dev / median_val if median_val > 0 else 0.0
+    
+    # Transparency Score
+    score_data = calculate_transparency_score(wrr, safety_net_tax)
     
     return {
         "median": int(median_val),
         "p95": int(p95_val),
         "cte95": float(cte95),
         "wrr": float(wrr),
-        "kurtosis": float(0.0), # Placeholder for full kurtosis
+        "kurtosis": float(0.0), 
         "confidence_budget_95": int(p95_cost_percentile(trials, 0.95)),
-        "safety_net_tax": float(safety_net_tax)
+        "safety_net_tax": float(safety_net_tax),
+        "transparency_score": score_data["score"],
+        "transparency_grade": score_data["grade"]
     }
+
+def calculate_transparency_score(wrr, snt, obfuscation=1.0):
+    """
+    Calculates a weighted Transparency Score (0-100) and letter grade (A-F).
+    """
+    # Weights: WRR (40%), SNT (30%), Obfuscation (30%)
+    # Lower is better for WRR, SNT, Obfuscation.
+    
+    # Normalize components (Heuristic)
+    # WRR: 1.0 is perfect, 5.0+ is terrible
+    wrr_norm = max(0, 100 - (wrr - 1.0) * 20)
+    
+    # SNT: 0.0 is perfect, 1.0+ is high tax
+    snt_norm = max(0, 100 - snt * 100)
+    
+    # Obfuscation: 1.0 is perfect, 5.0+ is high obfuscation
+    obf_norm = max(0, 100 - (obfuscation - 1.0) * 20)
+    
+    total_score = (wrr_norm * 0.4) + (snt_norm * 0.3) + (obf_norm * 0.3)
+    
+    if total_score >= 90: grade = "A"
+    elif total_score >= 80: grade = "B"
+    elif total_score >= 70: grade = "C"
+    elif total_score >= 60: grade = "D"
+    else: grade = "F"
+    
+    return {"score": float(total_score), "grade": grade}
 
 def p95_cost_percentile(data, percentile):
     return np.percentile(data, percentile * 100)

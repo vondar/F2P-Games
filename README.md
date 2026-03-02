@@ -137,6 +137,8 @@ Instead of "Average Cost," we focus on **Asymmetric Variance Exposure**:
 The **Streamlit Forensic Dashboard** provides a high-visibility interface for:
 - **Interactive CDF Analysis:** Visualize the probability of success vs. total cost.
 - **Economic Pain Index:** Translate virtual costs into working days adjusted for **Purchasing Power Parity (PPP)**.
+- **Seasonal Portfolio Sim:** Quantify the probability of being unlucky across multiple banners in a single season.
+- **Transparency Grading:** Instant A-F grade for every banner based on weighted forensic metrics.
 - **Multi-Stage & Step-Up Acquisition:** Support for shards/tokens and variable trial costs/probabilities.
 - **Community Validation Engine:** Upload observed data to detect statistical discrepancies in published odds.
 - **Forensic Documentation:** Generate and download **Standardized Fact Sheets** directly from the UI.

@@ -31,9 +31,20 @@ def load_loot_config(file_path):
             try:
                 validate(instance=config, schema=schema)
             except ValidationError as e:
-                print(f"Loot config validation failed: {e.message}")
-                # We can choose to either raise or just warn.
+                raise ValueError(f"Loot config schema validation failed: {e.message}")
                 
+    # Forensic Sanity Checks
+    base_prob = config.get("base_prob", 0.0)
+    if base_prob <= 0 or base_prob > 1.0:
+        raise ValueError(f"Nonsensical Architecture: base_prob must be between 0 and 1. Found: {base_prob}")
+        
+    cost = config.get("cost_per_pull_usd", 0.0)
+    if cost < 0:
+        raise ValueError(f"Nonsensical Architecture: cost_per_pull_usd cannot be negative. Found: {cost}")
+        
+    if "expected_meta_lifespan_days" in config and config["expected_meta_lifespan_days"] <= 0:
+        raise ValueError(f"Nonsensical Architecture: expected_meta_lifespan_days must be > 0. Found: {config['expected_meta_lifespan_days']}")
+        
     return config
 
 def load_retention_config(file_path):

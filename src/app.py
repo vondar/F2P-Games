@@ -11,6 +11,7 @@ from src.metrics.risk_metrics import calculate_risk_metrics
 from src.metrics.friction import calculate_loss_aversion_index
 from src.utils.config_loader import load_loot_config
 from src.utils.community_ingestor import ingest_community_data, calculate_distribution_counts
+from src.analysis.seasonal_sim import simulate_seasonal_load
 from src.utils.fact_sheet import generate_fact_sheet
 from src.utils.reporter import generate_forensic_summary
 
@@ -48,10 +49,19 @@ iterations = st.sidebar.select_slider("Iterations", options=[10000, 50000, 10000
 cost_per_pull = st.sidebar.number_input("Cost per Pull ($)", value=config.get("cost_per_pull_usd", 1.0))
 
 social_proof = st.sidebar.toggle("Enable Social Proof Bias", help="Simulate perceived probability based on frequent global win announcements.")
+rate_drift = st.sidebar.toggle("Simulate Rate Drift (Anti-Forensic)", help="Simulate a scenario where p drops by 20% after 50 trials to test Chi-Squared sensitivity.")
 show_raw_data = st.sidebar.checkbox("Show Raw Data", value=False)
 
 if st.sidebar.button("Run Forensic Analysis"):
     with st.spinner("Running Monte Carlo Simulations..."):
+        # Apply Rate Drift if active
+        effective_pity = config.get("pity_config")
+        if rate_drift:
+            # Inject a 'drift' where p drops after 50 trials
+            effective_pity = effective_pity.copy() if effective_pity else {"type": "linear", "start": 100, "end": 100}
+            effective_pity["step_up"] = {"50": base_prob * 0.8} # 20% drop at trial 50
+            st.warning("🕵️ **Rate Drift Active:** Success probability will drop by 20% at trial 50.")
+
         sim_data = run_monte_carlo_sim(
             base_prob=base_prob,
             iterations=iterations,
@@ -68,6 +78,12 @@ if st.sidebar.button("Run Forensic Analysis"):
             st.info(f"Actual Odds: {base_prob:.2%} | **Perceived Odds (Bias): {perceived_p:.2%}**")
             
         metrics = calculate_risk_metrics(sim_data)
+        
+        # --- Layout: Transparency Grade ---
+        st.divider()
+        grade_color = "green" if metrics['transparency_grade'] in ['A', 'B'] else "orange" if metrics['transparency_grade'] == 'C' else "red"
+        st.markdown(f"<h2 style='text-align: center;'>Transparency Grade: <span style='color: {grade_color};'>{metrics['transparency_grade']}</span></h2>", unsafe_allow_color=True)
+        st.progress(metrics['transparency_score'] / 100.0)
         
         # --- Layout: Key Forensic Metrics ---
         col1, col2, col3, col4 = st.columns(4)
@@ -175,12 +191,41 @@ if st.sidebar.button("Run Forensic Analysis"):
             st.divider()
             st.subheader("📄 Raw Forensic Data")
             st.dataframe(pd.DataFrame({
-                "Trial Count": sim_data,
-                "Estimated Cost ($)": sim_data * cost_per_pull
+                "Trial Count": sim_data["trials"],
+                "Estimated Cost ($)": sim_data["costs"]
             }).describe())
-
 else:
     st.info("Select a configuration in the sidebar and click 'Run Forensic Analysis' to begin.")
 
+st.sidebar.divider()
+st.sidebar.header("Seasonal Portfolio Sim")
+if st.sidebar.button("Simulate Seasonal Load"):
+    st.divider()
+    st.header("🌩️ Seasonal Portfolio Risk: The 'Black Swan' Analysis")
+    
+    # Use the 'Big Three' for the seasonal simulation
+    configs = [
+        load_loot_config("data/loot_configs/pubg_premium_crate.json"),
+        load_loot_config("data/loot_configs/bgmi_mythic_spin.json"),
+        load_loot_config("data/loot_configs/free_fire_diamond_royale.json")
+    ]
+    
+    with st.spinner("Simulating 50,000 Seasonal Life-Cycles..."):
+        seasonal_res = simulate_seasonal_load(configs, iterations=50000)
+        
+        col_s1, col_col_s2, col_s3 = st.columns(3)
+        col_s1.metric("Median Seasonal Cost", f"${seasonal_res['median_seasonal_cost']:,.2f}")
+        col_col_s2.metric("95% Seasonal Budget", f"${seasonal_res['p95_seasonal_cost']:,.2f}")
+        col_s3.metric("Black Swan Risk", f"{seasonal_res['black_swan_risk']:.2f}%", 
+                      help="Probability of hitting the P80+ unlucky tail in ALL seasonal banners simultaneously.")
+        
+        st.warning(f"⚠️ **Portfolio Verdict:** A player has a **1 in {int(100/seasonal_res['black_swan_risk'])}** chance of being unlucky across all major seasonal events, potentially leading to financial collapse.")
+        
+        # Plot seasonal cost distribution
+        fig_seasonal = px.histogram(seasonal_res['cumulative_costs'], nbins=50, 
+                                   title="Seasonal Financial Load Distribution",
+                                   labels={'value': 'Total Seasonal Spend ($)'})
+        st.plotly_chart(fig_seasonal, use_container_width=True)
+
 st.divider()
-st.caption("Forensic Toolset v0.6.0 | Distributional Mathematics for Consumer Protection")
+st.caption("Forensic Toolset v1.0.0 | Distributional Mathematics for Consumer Protection")

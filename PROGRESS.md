@@ -60,6 +60,12 @@ This document tracks the implementation progress, encountered problems, and solu
 - [x] Implement standardized **Forensic Fact Sheet** export (`src/utils/fact_sheet.py`)
 - [x] Integrate **Fact Sheet** generation and download into the Dashboard
 - [x] Implement **Safety Net Tax (SNT)** to quantify the cost of variance protection
+- [x] Implement **Seasonal Load Simulator** for Portfolio Risk analysis
+- [x] Implement **Forensic Sanity Checks** for robust config validation
+- [x] Implement **Transparency Score** (A-F grade) for automated auditing
+- [x] Create **GLOSSARY.md** for non-technical forensic communication
+- [x] Update labor-cost metrics with 2026 economic data
+- [x] Pin dependency versions for v1.0 stability
 
 ## Problems & Solutions
 

@@ -98,6 +98,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Backward compatibility for `calculate_risk_metrics` to support both legacy and v0.9.0 data formats.
 - Corrected audit trail linking in generated fact sheets.
 
+## [1.0.0] - 2026-03-02
+
+### Added
+- **Seasonal Portfolio Simulator**: Quantifies "Seasonal Tail Coincidence" and the probability of hitting multiple financial "Black Swans" in one season.
+- **Transparency Score (A-F)**: A single, non-technical grade for loot banners based on WRR, SNT, and Obfuscation metrics.
+- **Forensic Sanity Checks**: Robust config validation to prevent nonsensical simulation parameters (zero probability, negative costs).
+- **GLOSSARY.md**: Comprehensive guide for non-technical users (journalists, regulators).
+- **PPP-Adjusted Labor Data**: Updated 2026 economic data for global regions.
+- **Anti-Forensic Detection (Rate Drift)**: Dashboard utility to test the sensitivity of community data against dynamic rate shifting.
+
+### Fixed
+- Dependency lockdown in `requirements.txt` for v1.0 stability.
+- Improved error handling for nonsensical architectures in `config_loader.py`.
+
 ### Fixed
 - Dependencies updated to include `streamlit` and `plotly` for visualization.
 
