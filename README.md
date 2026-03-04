@@ -5,6 +5,12 @@ This project models mobile free-to-play (F2P) monetization as a stochastic finan
 
 **This is a measurement tool, not a moral platform.** We replace emotional rhetoric with distributional mathematics.
 
+## Community & Transparency
+Empower yourself with data. 
+
+- **[COMMUNITY.md](file:///d:/opensource/F2P-Games/COMMUNITY.md):** Learn how to locate, extract, and utilize your own pull history for forensic validation.
+- **[GLOSSARY.md](file:///d:/opensource/F2P-Games/GLOSSARY.md):** Non-technical definitions for risk metrics (CTE, WRR, SNT).
+
 ---
 
 ## System Architecture
