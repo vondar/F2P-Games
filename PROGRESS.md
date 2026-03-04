@@ -66,6 +66,16 @@ This document tracks the implementation progress, encountered problems, and solu
 - [x] Create **GLOSSARY.md** for non-technical forensic communication
 - [x] Update labor-cost metrics with 2026 economic data
 - [x] Pin dependency versions for v1.0 stability
+- [x] Create **COMMUNITY.md** for community data discovery and contribution
+- [x] Create **DATA_REQUIRED.md** for formal data specification standards
+- [x] Implement **Secondary Logic** in Monte Carlo for conditional guarantees (50/50 flip)
+- [x] Implement **Epitomized Path** logic for weapon banner simulation
+- [x] Implement **Exhaustive Mode** for CODM Lucky Draws (Hypergeometric simulation)
+- [x] Implement **Initial Discount** support for first-trial cost overrides
+- [x] Implement **Transparency Trap: Sensitivity Sweep** for undisclosed rates
+- [x] Update labor-cost metrics with **Big Mac Index** and PPP-adjusted values
+- [x] Integrate **Multi-Stage Sunk Cost Anchor** into forensic reporting
+- [x] Support **Forensic Grade (A-F)** and **Transparency Score** in generated fact sheets
 
 ## Problems & Solutions
 
@@ -81,3 +91,7 @@ This document tracks the implementation progress, encountered problems, and solu
 | 2026-03-02 | Forensic Metric "Ghosting" | Logistic coefficients in RIC analysis could appear significant due to noise without proper error estimation. | Implemented Standard Error reporting and significance heuristics in `src/analysis/incentives.py`. | Resolved |
 | 2026-03-02 | "Bonus" Currency Math Obfuscation | Standard friction metrics didn't account for the "mental math" load of bonus currency packs. | Added a `Bonus Obfuscation Penalty` to friction calculations in `src/metrics/friction.py`. | Resolved |
 | 2026-03-02 | Cross-Game Audit Data Drift | Comparing different games manually is error-prone due to varying cost units (UC, Diamonds, Gems). | Implemented `State of the Tail` runner to normalize all costs to USD using standardized labor-cost metrics. | Resolved |
+| 2026-03-04 | `NameError: get_trial_cost` | Missing import in `monte_carlo.py` after refactoring. | Added missing import from `src.engine.curves`. | Resolved |
+| 2026-03-04 | `AxisError` in `run_analysis.py` | Incorrect NumPy array indexing when accessing simulation results dictionary. | Updated indexing to correctly target `sim_data["trials"]`. | Resolved |
+| 2026-03-04 | Streamlit Slider Type Mismatch | Slider value arguments had mixed types (int vs float) causing runtime exception. | Explicitly cast base probability to float in `app.py`. | Resolved |
+| 2026-03-04 | `ValueError: cost_per_pull_usd` | Schema mismatch after adding mandatory cost property to loot configs. | Updated all JSON configs to include the required cost property. | Resolved |

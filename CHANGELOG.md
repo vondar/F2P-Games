@@ -85,6 +85,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for launching the dashboard via `main.py dashboard`.
 - Enhanced `geo_configs.json` with Minimum Wage data points.
 
+## [1.0.0] - 2026-03-04
+
+### Added
+- **Secondary Logic Support**: Engine now handles conditional guarantees like the Genshin "50/50" flip.
+- **Epitomized Path Logic**: Specialized multi-failure guarantee tracking for weapon banners.
+- **Exhaustive Mode**: Support for Hypergeometric simulations (CODM Lucky Draws) with escalating costs.
+- **Transparency Grading (A-F)**: Automated banner scoring based on WRR, SNT, and obfuscation metrics.
+- **Transparency Trap (Sensitivity Sweep)**: Automated analysis of undisclosed rate impact on confidence budgets.
+- **Big Mac Index Integration**: New economic metric to contextualize global acquisition costs.
+- **COMMUNITY.md & DATA_REQUIRED.md**: Comprehensive documentation for community data discovery and contribution.
+- **Multi-Stage Sunk Cost Anchor**: Forensic identification of "locked-in" upgrade paths in reports.
+- **Initial Discount Support**: Support for trial-specific cost overrides (e.g., first-spin discounts).
+
+### Fixed
+- Vectorized probability resolution in `monte_carlo.py` for per-iteration pity counters.
+- Fixed `AxisError` in `run_analysis.py` for 0-dim array indexing.
+- Fixed Streamlit slider type-safety for probability inputs.
+- Mandatory `cost_per_pull_usd` validation in `config_loader.py`.
+
 ## [0.9.0] - 2026-03-02
 
 ### Added

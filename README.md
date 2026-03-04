@@ -122,6 +122,8 @@ uv run main.py audit
 ### Module 0: Integrity & Investigation
 - **Geometric Baseline:** Validates that static probability simulations converge to $E[N] = 1/p$ within <0.5% deviation.
 - **Step-Up Support:** Engine handles variable costs and probabilities per trial, modeling the "Step-Up Trap" where costs inflate as acquisition nears.
+- **Secondary Logic (Genshin/Weapon):** Engine handles complex guarantees like the "50/50" flip and "Epitomized Path" logic (multi-failure guarantees).
+- **Exhaustive Mode (CODM):** Specialized **Hypergeometric simulation** for Lucky Draws where items are removed from the pool, causing costs to escalate.
 - **Community Data Validation:** Uses **Chi-Squared Goodness-of-Fit** to compare observed community pull data (scraped from Reddit/YouTube) against simulated expectations to detect **"Silent Nerfs."**
 
 ### Module 1: Tail Risk (CTE₉₅ & WRR)
@@ -129,8 +131,9 @@ Instead of "Average Cost," we focus on **Asymmetric Variance Exposure**:
 - **CTE₉₅:** Average cost for the "unlucky" 5%.
 - **WRR (Whale Revenue Ratio):** $CTE_{95} / \text{Median}$. Quantifies revenue reliance on extreme outliers.
 - **Safety Net Tax (SNT):** Quantifies the premium players pay for the variance protection of pity systems.
+- **Transparency Trap (Sensitivity Sweep):** Automated audit for systems with undisclosed or ultra-low rates to show how tail risk explodes without transparency.
 - **Utility Decay:** Translates one-time purchases into a daily **Meta-Relevance Cost**, showing the "subscription equivalent" of items that power-creep over time.
-- **Forensic Reporting:** Generates human-readable Markdown reports and **Standardized Fact Sheets** contextualizing costs as **Days of Median Labor** across global regions.
+- **Forensic Reporting:** Generates human-readable Markdown reports and **Standardized Fact Sheets** contextualizing costs as **Days of Median Labor** and **Big Mac Equivalents** across global regions.
 
 ### Module 3: Friction & Obfuscation
 - **Incentive Gap (IG):** Measures forced surplus spending by comparing required costs to available currency packs.
@@ -143,9 +146,10 @@ Instead of "Average Cost," we focus on **Asymmetric Variance Exposure**:
 ## Forensic Dashboard
 The **Streamlit Forensic Dashboard** provides a high-visibility interface for:
 - **Interactive CDF Analysis:** Visualize the probability of success vs. total cost.
-- **Economic Pain Index:** Translate virtual costs into working days adjusted for **Purchasing Power Parity (PPP)**.
+- **Economic Pain Index:** Translate virtual costs into working days and **Big Mac Equivalents** adjusted for **Purchasing Power Parity (PPP)**.
 - **Seasonal Portfolio Sim:** Quantify the probability of being unlucky across multiple banners in a single season.
 - **Transparency Grading:** Instant A-F grade for every banner based on weighted forensic metrics.
+- **Transparency Trap Analysis:** Automated sensitivity sweep to expose the cost of undisclosed odds.
 - **Multi-Stage & Step-Up Acquisition:** Support for shards/tokens and variable trial costs/probabilities.
 - **Community Validation Engine:** Upload observed data to detect statistical discrepancies in published odds.
 - **Forensic Documentation:** Generate and download **Standardized Fact Sheets** directly from the UI.
