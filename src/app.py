@@ -224,25 +224,14 @@ if st.sidebar.button("Run Forensic Analysis"):
             elif "⚠️ WARNING" in warning_msg: st.warning(warning_msg)
             else: st.info(warning_msg)
             
-            lai_data = calculate_loss_aversion_index(current_shards, threshold, cost_per_pull)
-            st.write(f"Perceived Value Multiplier: **{lai_data['perceived_value_multiplier']:.2f}x**")
-            st.write(f"Psychological Abandonment Penalty: **${lai_data['abandonment_penalty_usd']:.2f}**") 
-                   help="Quantifies how much more the tail-end outliers pay compared to the median player.")
-
-        # --- Psychology: Loss Aversion Index ---
-        st.subheader("🧠 Psychological Pressure: Loss Aversion Index (LAI)")
-        # Simulate a user halfway through acquisition
-        current_shards = st.slider("Simulate Current Progress (Shards)", 0, int(threshold), int(threshold * 0.8))
-        lai_metrics = calculate_loss_aversion_index(current_shards, threshold, cost_per_pull)
-        
-        col_lai1, col_lai2, col_lai3 = st.columns(3)
-        col_lai1.metric("Completion Ratio", f"{lai_metrics['completion_ratio']:.1%}")
-        col_lai2.metric("Perceived Value Multiplier", f"{lai_metrics['perceived_value_multiplier']:.2f}x",
-                       help="How much more valuable the next shard feels compared to the first one.")
-        col_lai3.metric("Abandonment Penalty", f"${lai_metrics['abandonment_penalty_usd']:,.2f}",
-                       help="The financial value of progress forfeited if the player stops now.")
-        
-        st.info(f"💡 **The Sunk Cost Trap:** At {lai_metrics['completion_ratio']:.1%}, the next pull is psychologically worth **{lai_metrics['perceived_value_multiplier']:.2f}x** its mathematical value.")
+            lai_metrics = calculate_loss_aversion_index(current_shards, threshold, cost_per_pull)
+            
+            col_lai1, col_lai2, col_lai3 = st.columns(3)
+            col_lai1.metric("Completion Ratio", f"{lai_metrics['completion_ratio']:.1%}")
+            col_lai2.metric("Perceived Value", f"{lai_metrics['perceived_value_multiplier']:.2f}x",
+                           help="How much more valuable the next shard feels compared to the first one.")
+            col_lai3.metric("Abandonment Penalty", f"${lai_metrics['abandonment_penalty_usd']:,.2f}",
+                           help="The financial value of progress forfeited if the player stops now.")
 
         # --- Community Validation Section ---
         if uploaded_file:

@@ -136,6 +136,10 @@ def get_grocery_equivalent(cost_usd, region_data):
     }
 
 def calculate_conversion_loss_factor(exchange_rates):
+    complexity = 0.0
+    total_bonus_obfuscation = 0.0
+    
+    for rate_data in exchange_rates:
         if isinstance(rate_data, dict):
             rate = rate_data.get("base", 1.0)
             bonus = rate_data.get("bonus", 0.0)
