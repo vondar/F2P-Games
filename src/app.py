@@ -91,7 +91,12 @@ if st.sidebar.button("Run Forensic Analysis"):
         snt = metrics['safety_net_tax']
         
         verdict_color = "red" if wrr > 3.0 or snt > 1.0 else "orange" if wrr > 2.0 else "green"
-        st.error(f"**THE VERDICT:** This banner is designed to extract surplus from 'unlucky' players. While the median player pays **${median_cost:,.2f}**, the unluckiest 5% must spend **${p95_cost:,.2f}** or more. **Recommendation: {'AVOID' if wrr > 3.0 else 'CAUTION' if wrr > 2.0 else 'TRANSPARENT'} unless you have the Safe Budget ready.**") if verdict_color == "red" else st.warning(f"**THE VERDICT:** This banner is moderately risky. Expect to pay around **${median_cost:,.2f}**, but keep **${p95_cost:,.2f}** as a buffer for bad luck.") if verdict_color == "orange" else st.success(f"**THE VERDICT:** This banner is relatively fair. The price is predictable and the 'Unlucky Tax' is low.")
+        if verdict_color == "red":
+            st.error(f"**THE VERDICT:** This banner is designed to extract surplus from 'unlucky' players. While the median player pays **${median_cost:,.2f}**, the unluckiest 5% must spend **${p95_cost:,.2f}** or more. **Recommendation: {'AVOID' if wrr > 3.0 else 'CAUTION' if wrr > 2.0 else 'TRANSPARENT'} unless you have the Safe Budget ready.**")
+        elif verdict_color == "orange":
+            st.warning(f"**THE VERDICT:** This banner is moderately risky. Expect to pay around **${median_cost:,.2f}**, but keep **${p95_cost:,.2f}** as a buffer for bad luck.")
+        else:
+            st.success(f"**THE VERDICT:** This banner is relatively fair. The price is predictable and the 'Unlucky Tax' is low.")
 
         # --- Layout: Transparency Grade ---
         st.divider()
