@@ -1,29 +1,46 @@
 {
     "metadata": {
-        "system_name": "Free Fire - Diamond Royale (Grand Prize)",
+        "system_name": "BGMI - Winter Crate 2026 (M416 Glacier)",
         "iterations": 100000,
         "seed": 42,
         "config": {
-            "system_name": "Free Fire - Diamond Royale (Grand Prize)",
-            "base_prob": 0.007,
-            "pity_config": {
-                "type": "linear",
-                "start": 50,
-                "end": 100,
-                "target_prob": 1.0,
-                "notes": "Free Fire uses 'Luck' counters that ramp significantly, often guaranteeing by 100-200."
+            "system_name": "BGMI - Winter Crate 2026 (M416 Glacier)",
+            "game": "BGMI",
+            "base_prob": 0.000558,
+            "cost_per_pull_usd": 0.9,
+            "multi_stage": {
+                "enabled": true,
+                "stages": [
+                    "Base Skin",
+                    "Kill Effect",
+                    "Loot Box Skin"
+                ],
+                "upgrade_cost_avg_usd": 2500
             },
-            "cost_per_pull_usd": 0.8,
-            "game": "Free Fire"
+            "pity_config": null,
+            "acquisition_threshold": 1,
+            "notes": "Probability 0.0558% for ID 110 (M416 Glacier). No pity mechanism observed for this specific item."
         },
-        "timestamp": "2026-03-02T19:34:32.747746"
+        "timestamp": "2026-03-04T17:29:42.450783"
     },
     "risk_metrics": {
-        "median": 55.0,
-        "p95": 65.0,
-        "cte95": 67.81405054486436,
-        "wrr": 1.232982737179352,
-        "kurtosis": 0.3637473505171487,
-        "confidence_budget_95": 65.0
+        "median": 1192,
+        "p95": 5006,
+        "cte95": 6105.86,
+        "median_cost": 1112.3999999999908,
+        "p95_cost": 4852.844999999976,
+        "cte95_cost": 6108.803999999478,
+        "wrr": 5.491553398057829,
+        "kurtosis": 0.0,
+        "confidence_budget_95": 4852,
+        "safety_net_tax": 1.3193840383018691,
+        "transparency_score": 34.06757281553737,
+        "transparency_grade": "F"
+    },
+    "sensitivity_sweep": {
+        "0.01": 264.60000000000093,
+        "0.005": 523.8449999999938,
+        "0.001": 2705.5350000001495,
+        "0.0005": 5348.8349999997845
     }
 }

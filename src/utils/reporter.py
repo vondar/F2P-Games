@@ -51,9 +51,28 @@ def generate_forensic_summary(results_data, geo_data=None):
         regions = geo_data.get("regions", {})
         for region, data in regions.items():
             daily_income = data.get("median_daily_income_usd", 1.0)
-            days_labor = p95_cost / daily_income
-            summary.append(f"- **{region}:** {days_labor:.1f} days of median labor required (95% Confidence).")
+            big_mac_usd = data.get("big_mac_price_usd", 5.0)
             
+            days_labor = p95_cost / daily_income
+            big_mac_equiv = p95_cost / big_mac_usd
+            
+            # Special emphasis for extreme labor costs
+            if days_labor > 365:
+                summary.append(f"- **{region}:** {days_labor/365:.1f} **YEARS** of labor ({big_mac_equiv:.0f} Big Macs).")
+            else:
+                summary.append(f"- **{region}:** {days_labor:.1f} days of labor ({big_mac_equiv:.0f} Big Macs).")
+            
+    # 5. Multi-Stage Sunk Cost Anchor
+    multi_stage = config.get("multi_stage", {})
+    if multi_stage.get("enabled"):
+        upgrade_cost = multi_stage.get("upgrade_cost_avg_usd", 0)
+        total_commitment = p95_cost + upgrade_cost
+        summary.append("\n## 5. Multi-Stage Sunk Cost Anchor")
+        summary.append(f"- **Base Acquisition (95%):** ${p95_cost:.2f}")
+        summary.append(f"- **Estimated Upgrade Path:** ${upgrade_cost:.2f}")
+        summary.append(f"- **Total Forensic Commitment:** ${total_commitment:.2f}")
+        summary.append(f"> *The base skin is a **Sunk Cost Anchor**. Once acquired, the player is psychologically locked into a total commitment of **${total_commitment:.2f}** to reach full utility.*")
+
     summary.append("\n---")
     summary.append("**Verdict:** " + ("EXTREME RISK" if wrr > 5.0 else "HIGH RISK" if wrr > 3.0 else "MODERATE RISK"))
     

@@ -86,18 +86,30 @@ def calculate_top_up_pressure(current_balance, available_packs, minimum_item_cos
         "pressure_index": float(cheapest_pack / minimum_item_cost if minimum_item_cost > 0 else 0),
         "residual_utility": float(current_balance)
     }
+
+def calculate_social_proof_hallucination(ritual_count, delay_per_ritual_sec=5.0):
     """
-    Module 3: Conversion Loss Factor.
-    Measures the complexity of exchange rates (e.g., 1 USD : 1.64 Gems).
+    Module 3: Social Proof Hallucination Index.
+    Quantifies the psychological friction of 'rituals' (e.g., tapping skins, 
+    not skipping animations) that create a false sense of control.
     
     Args:
-        exchange_rates (dict): Dictionary mapping currency pairs to rates.
-                               Rates can be a float or a dict with {"base": float, "bonus": float}.
-                               Example: {"USD_TO_GEM": {"base": 1.64, "bonus": 0.2}}
-                               
+        ritual_count (int): Number of ritual actions performed.
+        delay_per_ritual_sec (float): Estimated time delay per action.
+        
     Returns:
-        dict: Complexity metrics.
+        dict: Hallucination metrics.
     """
+    total_delay = ritual_count * delay_per_ritual_sec
+    # The 'Hallucination' is that these rituals affect the PRNG.
+    # We quantify this as 'Wasted Cognitive Time' per session.
+    
+    return {
+        "ritual_count": int(ritual_count),
+        "total_delay_sec": float(total_delay),
+        "cognitive_friction_index": float(ritual_count * 0.15), # Heuristic: 15% increase in perceived engagement per ritual
+        "verdict": "RITUAL NOISE DETECTED: IRRELEVANT TO PRNG"
+    }
     complexity = 0
     total_bonus_obfuscation = 0
     

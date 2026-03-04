@@ -1,0 +1,18 @@
+{
+  "system_name": "BGMI - Winter Crate 2026 (M416 Glacier)",
+  "game": "BGMI",
+  "base_prob": 0.000558,
+  "cost_per_pull_usd": 0.90,
+  "multi_stage": {
+    "enabled": true,
+    "stages": [
+      "Base Skin",
+      "Kill Effect",
+      "Loot Box Skin"
+    ],
+    "upgrade_cost_avg_usd": 2500
+  },
+  "pity_config": null,
+  "acquisition_threshold": 1,
+  "notes": "Probability 0.0558% for ID 110 (M416 Glacier). No pity mechanism observed for this specific item."
+}

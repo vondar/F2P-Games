@@ -1,0 +1,22 @@
+{
+  "system_name": "Genshin Weapon Event Wish",
+  "game": "Genshin Impact",
+  "base_prob": 0.007,
+  "cost_per_pull_usd": 2.97,
+  "pity_config": {
+    "type": "exponential",
+    "start": 62,
+    "end": 80,
+    "increment": 0.07,
+    "notes": "Soft pity starts at 62 for weapons, hard cap at 80."
+  },
+  "secondary_logic": {
+    "type": "epitomized_path",
+    "target_chance": 0.375,
+    "max_fails": 2,
+    "notes": "Epitomized Path: 2 fails (non-target 5-stars) guarantee the target weapon on the 3rd success."
+  },
+  "acquisition_threshold": 1,
+  "expected_meta_lifespan_days": 365,
+  "notes": "The Weapon Trap. 75% chance for a featured weapon, but only 37.5% for the *specific* target weapon until Epitomized Path triggers."
+}

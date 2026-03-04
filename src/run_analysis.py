@@ -30,16 +30,22 @@ def main():
     
     base_prob = config.get("base_prob", 0.01)
     pity_config = config.get("pity_config")
+    secondary_logic = config.get("secondary_logic")
     system_name = config.get("system_name", "Unknown System")
     threshold = args.threshold if args.threshold is not None else config.get("acquisition_threshold", 1)
+    base_cost_usd = config.get("cost_per_pull_usd", 1.0)
+    mode = config.get("mode", "geometric")
     
-    print(f"Running {args.iterations} iterations for '{system_name}' (Threshold: {threshold})...")
+    print(f"Running {args.iterations} iterations for '{system_name}' (Threshold: {threshold}, Mode: {mode})...")
     sim_data = run_monte_carlo_sim(
         base_prob=base_prob,
         iterations=args.iterations,
         pity_config=pity_config,
         seed=args.seed,
-        acquisition_threshold=threshold
+        acquisition_threshold=threshold,
+        base_cost_usd=base_cost_usd,
+        secondary_logic=secondary_logic,
+        mode=mode
     )
     
     results = {
@@ -55,7 +61,7 @@ def main():
     # Module 0 Validation
     if args.validate:
         print("Running Module 0: Geometric Baseline validation...")
-        validation = validate_geometric_baseline(sim_data, base_prob)
+        validation = validate_geometric_baseline(sim_data["trials"], base_prob)
         results["validation"] = validation
         print(f"Validation Result: {'PASS' if validation['is_valid'] else 'FAIL'}")
         
@@ -64,11 +70,24 @@ def main():
     risk_metrics = calculate_risk_metrics(sim_data)
     results["risk_metrics"] = risk_metrics
     
+    # 2.5 Sensitivity Sweep for Zero Transparency (if base_prob is very low/undisclosed)
+    if base_prob <= 0.001 and mode == "geometric":
+        print("\n[FORENSIC ALERT] Zero Transparency Detected (Low/Undisclosed Base Prob).")
+        print("Running Sensitivity Sweep to quantify 'Transparency Trap'...")
+        sweeps = [0.01, 0.005, 0.001, 0.0005]
+        sweep_results = {}
+        for s_p in sweeps:
+            s_data = run_monte_carlo_sim(base_prob=s_p, iterations=10000, pity_config=pity_config, acquisition_threshold=threshold, base_cost_usd=base_cost_usd, secondary_logic=secondary_logic)
+            s_risk = calculate_risk_metrics(s_data)
+            sweep_results[str(s_p)] = s_risk["p95_cost"]
+        results["sensitivity_sweep"] = sweep_results
+        print("Sensitivity Sweep Complete. Tail risk increases exponentially as disclosure decreases.")
+    
     # 3. CDF Plotting (Confidence Budget Framing)
     if args.plot:
         print("Generating Cost Cumulative Distribution Function (CDF) plot...")
         # Sort data to compute CDF
-        x_sorted = np.sort(sim_data)
+        x_sorted = np.sort(sim_data["trials"])
         y_cdf = np.arange(len(x_sorted)) / float(len(x_sorted))
         
         plt.figure(figsize=(10, 6))

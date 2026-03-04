@@ -10,21 +10,41 @@ def generate_fact_sheet(results_data, report_content, output_path):
     system_name = metadata.get("system_name", "Unknown System")
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
+    risk = results_data.get("risk_metrics", {})
+    grade = risk.get("transparency_grade", "N/A")
+    score = risk.get("transparency_score", 0.0)
+    snt = risk.get("safety_net_tax", 0.0)
+
     fact_sheet = [
         f"# CONSUMER PROTECTION FACT SHEET: {system_name.upper()}",
         f"**Audit Timestamp:** {timestamp}",
-        f"**Forensic Toolset Version:** 0.9.0",
+        f"**Forensic Toolset Version:** 1.0.0",
         "\n## EXECUTIVE SUMMARY",
         "> This document provides a standardized risk assessment of a virtual loot system. "
         "It uses distributional mathematics to quantify financial exposure that is often "
         "obfuscated by virtual currencies and stochastic mechanics.",
-        "\n---",
-        report_content, # Include the main forensic summary
+        f"\n### **FORENSIC GRADE: {grade}** ({score:.1f}/100)",
+        f"- **Safety Net Tax (SNT):** {snt:.2f}",
+        "> *The SNT measures how much of the price is 'taxed' into the pity system vs. raw luck.*",
+    ]
+
+    # Add sensitivity sweep summary for low-transparency systems
+    if "sensitivity_sweep" in results_data:
+        fact_sheet.append("\n### **TRANSPARENCY TRAP: SENSITIVITY SWEEP**")
+        fact_sheet.append("> This system has an undisclosed or ultra-low base probability. We analyzed the 'Confidence Budget' required if the real rate is lower than published.")
+        sweeps = results_data["sensitivity_sweep"]
+        for prob, cost in sweeps.items():
+            fact_sheet.append(f"- **If real rate is {float(prob)*100:.2f}%:** 95% Confidence requires **${cost:,.2f}**.")
+
+    fact_sheet.append("\n---")
+    fact_sheet.append(report_content) # Include the main forensic summary
+    
+    fact_sheet.extend([
         "\n## AUDIT INTEGRITY & VERIFICATION",
         f"- **Simulation Iterations:** {metadata.get('iterations', 100000):,}",
         f"- **PRNG Seed:** {metadata.get('seed', 42)}",
         "- **Evidence Hashes:**",
-    ]
+    ])
     
     # Add audit trail if available
     audit_log = "data/results/audit_report.json"

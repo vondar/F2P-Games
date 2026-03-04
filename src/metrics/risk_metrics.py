@@ -37,6 +37,8 @@ def calculate_risk_metrics(sim_data_dict):
     wrr = cte95_cost / median_cost if median_cost > 0 else 1.0
     
     # Safety Net Tax (SNT)
+    # Quantifies the "tax" hidden in low base rates and high pity thresholds.
+    # Higher SNT means the "pity" is the primary acquisition method, not luck.
     std_dev = np.std(trials)
     safety_net_tax = std_dev / median_val if median_val > 0 else 0.0
     
@@ -52,7 +54,7 @@ def calculate_risk_metrics(sim_data_dict):
         "cte95_cost": float(cte95_cost),
         "wrr": float(wrr),
         "kurtosis": float(0.0), 
-        "confidence_budget_95": int(p95_cost_percentile(trials, 0.95)),
+        "confidence_budget_95": int(p95_cost_percentile(costs, 0.95)),
         "safety_net_tax": float(safety_net_tax),
         "transparency_score": score_data["score"],
         "transparency_grade": score_data["grade"]

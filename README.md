@@ -9,6 +9,7 @@ This project models mobile free-to-play (F2P) monetization as a stochastic finan
 Empower yourself with data. 
 
 - **[COMMUNITY.md](file:///d:/opensource/F2P-Games/COMMUNITY.md):** Learn how to locate, extract, and utilize your own pull history for forensic validation.
+- **[DATA_REQUIRED.md](file:///d:/opensource/F2P-Games/DATA_REQUIRED.md):** Formal specifications for Ground Truth and Observed Reality data.
 - **[GLOSSARY.md](file:///d:/opensource/F2P-Games/GLOSSARY.md):** Non-technical definitions for risk metrics (CTE, WRR, SNT).
 
 ---

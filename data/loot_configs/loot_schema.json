@@ -42,6 +42,13 @@
     "acquisition_threshold": {
       "type": "integer",
       "minimum": 1
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["geometric", "exhaustive"]
+    },
+    "secondary_logic": {
+      "type": "object"
     }
   },
   "required": ["system_name", "base_prob", "cost_per_pull_usd"]

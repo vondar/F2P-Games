@@ -1,0 +1,21 @@
+{
+  "system_name": "Genshin Character Event Wish",
+  "game": "Genshin Impact",
+  "base_prob": 0.006,
+  "cost_per_pull_usd": 2.97,
+  "pity_config": {
+    "type": "exponential",
+    "start": 74,
+    "end": 90,
+    "increment": 0.06,
+    "notes": "Soft pity starts at 74, exponential ramp up to hard cap at 90."
+  },
+  "secondary_logic": {
+    "type": "binary_flip_with_guarantee",
+    "target_chance": 0.5,
+    "on_fail_next_is_guaranteed": true
+  },
+  "acquisition_threshold": 1,
+  "expected_meta_lifespan_days": 180,
+  "notes": "The 50/50 Coin Flip. Losing the first 50/50 guarantees the featured character on the next 5-star success."
+}

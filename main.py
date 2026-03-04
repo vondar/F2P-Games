@@ -12,6 +12,7 @@ def main():
     monetization.add_argument("--config", type=str, required=True, help="Path to loot config")
     monetization.add_argument("--plot", action="store_true", help="Generate plots")
     monetization.add_argument("--report", action="store_true", help="Generate forensic report")
+    monetization.add_argument("--factsheet", action="store_true", help="Generate standardized forensic Fact Sheet")
     
     # Retention Analysis
     retention = subparsers.add_parser("retention", help="Run retention rigidity analysis")
@@ -51,6 +52,7 @@ def main():
             cmd = [python_path, "src/run_analysis.py", "--config", args.config]
             if args.plot: cmd.append("--plot")
             if args.report: cmd.append("--report")
+            if args.factsheet: cmd.append("--factsheet")
             subprocess.run(cmd, env=env, check=True)
             
         elif args.command == "dashboard":
