@@ -76,6 +76,11 @@ This document tracks the implementation progress, encountered problems, and solu
 - [x] Update labor-cost metrics with **Big Mac Index** and PPP-adjusted values
 - [x] Integrate **Multi-Stage Sunk Cost Anchor** into forensic reporting
 - [x] Support **Forensic Grade (A-F)** and **Transparency Score** in generated fact sheets
+- [x] Integrate **MBA-to-Noob translation layer** (`src/utils/translator.py`) for metrics terminology
+- [x] Enhance Dashboard with **Fairness Gauges** (WRR/SNT) and plain-English Verdicts
+- [x] Annotate CDF Confidence Curve to highlight **The Money Pit** and explicit guarantees
+- [x] Implement **Grocery Math** & **Life Clock** for visceral labor cost contextualization
+- [x] Transition Loss Aversion Index (LAI) UI into the **Sunk Cost Trap** with dynamic warnings
 
 ## Problems & Solutions
 

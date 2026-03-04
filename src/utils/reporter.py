@@ -3,6 +3,8 @@ import os
 import numpy as np
 
 from src.metrics.utility_decay import calculate_utility_decay
+from src.utils.translator import get_human_metric, get_human_grade, GRADE_DESCRIPTIONS
+from src.metrics.friction import get_grocery_equivalent
 
 def generate_forensic_summary(results_data, geo_data=None):
     """
@@ -19,21 +21,34 @@ def generate_forensic_summary(results_data, geo_data=None):
     p95_cost = risk.get("p95_cost", 0.0)
     cte95_cost = risk.get("cte95_cost", 0.0)
     wrr = risk.get("wrr", 1.0)
+    snt = risk.get("safety_net_tax", 0.0)
+    grade = risk.get("transparency_grade", "N/A")
     
+    # 0. Plain-English Verdict
+    verdict_text = ""
+    if wrr > 3.0 or snt > 1.0:
+        verdict_text = f"**THE VERDICT:** This banner is designed to extract surplus from 'unlucky' players. While the median player pays **${median_cost:,.2f}**, the unluckiest 5% must spend **${p95_cost:,.2f}** or more. **Recommendation: AVOID unless you have the Safe Budget ready.**"
+    elif wrr > 2.0:
+        verdict_text = f"**THE VERDICT:** This banner is moderately risky. Expect to pay around **${median_cost:,.2f}**, but keep **${p95_cost:,.2f}** as a buffer for bad luck."
+    else:
+        verdict_text = f"**THE VERDICT:** This banner is relatively fair. The price is predictable and the 'Unlucky Tax' is low."
+
     # Header
     summary = [
         f"# Forensic Audit: {system_name}",
         f"**Game:** {game_name}",
         f"**Date:** {os.path.basename(metadata.get('timestamp', 'N/A'))}",
+        f"\n### **Forensic Grade: {get_human_grade(grade)}**",
+        f"\n{verdict_text}",
         "\n---",
-        "## 1. The 'Sticker Price' (Confidence Budget)",
+        "## 1. The 'Safe Budget' (Confidence Budget)",
         f"- **Median Acquisition Cost:** ${median_cost:.2f}",
-        f"- **Budget for 95% Certainty:** ${p95_cost:.2f}",
-        f"> *Acquiring this item with 95% confidence requires a budget **{(p95_cost/median_cost - 1)*100:.1f}% higher** than the median player's cost.*",
-        "\n## 2. The 'Unlucky Player' Penalty",
-        f"- **Average Cost for Unlucky 5% (CTE₉₅):** ${cte95_cost:.2f}",
-        f"- **Whale Revenue Ratio (WRR):** {wrr:.2f}x",
-        f"> *The unluckiest players pay **{wrr:.2f} times more** than the median, indicating significant tail-end revenue reliance.*",
+        f"- **Safe Budget (95% Certainty):** ${p95_cost:.2f}",
+        f"> *Acquiring this item safely requires a budget **{(p95_cost/median_cost - 1)*100:.1f}% higher** than the median player's cost.*",
+        "\n## 2. The 'Unlucky Tax' (Variance)",
+        f"- **The Nightmare Scenario (CTE₉₅):** ${cte95_cost:.2f}",
+        f"- **Unlucky Tax (WRR):** {wrr:.2f}x",
+        f"> *Unlucky players pay **{wrr:.2f} times more** than the average, indicating a heavy reliance on 'Tail Extraction'.*",
     ]
     
     # 3. Utility Decay
@@ -55,12 +70,13 @@ def generate_forensic_summary(results_data, geo_data=None):
             
             days_labor = p95_cost / daily_income
             big_mac_equiv = p95_cost / big_mac_usd
+            grocery_math = get_grocery_equivalent(p95_cost, data)
             
             # Special emphasis for extreme labor costs
             if days_labor > 365:
-                summary.append(f"- **{region}:** {days_labor/365:.1f} **YEARS** of labor ({big_mac_equiv:.0f} Big Macs).")
+                summary.append(f"- **{region}:** {days_labor/365:.1f} **YEARS** of labor ({grocery_math['months_rent']:.1f} months rent).")
             else:
-                summary.append(f"- **{region}:** {days_labor:.1f} days of labor ({big_mac_equiv:.0f} Big Macs).")
+                summary.append(f"- **{region}:** {days_labor:.1f} days of labor ({grocery_math['weeks_groceries']:.1f} weeks groceries).")
             
     # 5. Multi-Stage Sunk Cost Anchor
     multi_stage = config.get("multi_stage", {})

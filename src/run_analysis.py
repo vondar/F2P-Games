@@ -10,6 +10,7 @@ from src.engine.validator import validate_geometric_baseline
 from src.metrics.risk_metrics import calculate_risk_metrics
 from src.utils.reporter import generate_forensic_summary, save_report
 from src.utils.fact_sheet import generate_fact_sheet
+from src.utils.translator import get_human_metric, get_human_grade
 
 def main():
     parser = argparse.ArgumentParser(description="F2P Monetization Analysis Runner")
@@ -70,7 +71,18 @@ def main():
     risk_metrics = calculate_risk_metrics(sim_data)
     results["risk_metrics"] = risk_metrics
     
-    # 2.5 Sensitivity Sweep for Zero Transparency (if base_prob is very low/undisclosed)
+    # Human-Friendly Summary Output
+    safe_budget_name = get_human_metric("95% Confidence Budget")["human_name"]
+    unlucky_tax_name = get_human_metric("Whale Revenue Ratio (WRR)")["human_name"]
+    nightmare_name = get_human_metric("CTE95")["human_name"]
+    
+    print(f"\n--- Forensic Summary: {system_name} ---")
+    print(f"Forensic Grade: {get_human_grade(risk_metrics['transparency_grade'])}")
+    print(f"Median Cost: ${risk_metrics['median_cost']:,.2f}")
+    print(f"{safe_budget_name}: ${risk_metrics['p95_cost']:,.2f}")
+    print(f"{unlucky_tax_name}: {risk_metrics['wrr']:.2f}x")
+    print(f"{nightmare_name}: ${risk_metrics['cte95_cost']:,.2f}")
+    print("-" * (22 + len(system_name)))
     if base_prob <= 0.001 and mode == "geometric":
         print("\n[FORENSIC ALERT] Zero Transparency Detected (Low/Undisclosed Base Prob).")
         print("Running Sensitivity Sweep to quantify 'Transparency Trap'...")

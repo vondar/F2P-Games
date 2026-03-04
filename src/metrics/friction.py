@@ -110,10 +110,32 @@ def calculate_social_proof_hallucination(ritual_count, delay_per_ritual_sec=5.0)
         "cognitive_friction_index": float(ritual_count * 0.15), # Heuristic: 15% increase in perceived engagement per ritual
         "verdict": "RITUAL NOISE DETECTED: IRRELEVANT TO PRNG"
     }
-    complexity = 0
-    total_bonus_obfuscation = 0
+
+def get_grocery_equivalent(cost_usd, region_data):
+    """
+    Translates USD cost into visceral 'Grocery' and 'Rent' equivalents
+    for a given region.
+    """
+    median_daily = region_data.get("median_daily_income_usd", 1.0)
+    big_mac = region_data.get("big_mac_price_usd", 5.0)
     
-    for rate_data in exchange_rates.values():
+    # Heuristics for visceral comparison
+    # 1 week of groceries approx 1.5 days of median income (conservative)
+    weekly_groceries_usd = median_daily * 1.5
+    # Monthly rent approx 10 days of median income
+    monthly_rent_usd = median_daily * 10.0
+    
+    weeks_groceries = cost_usd / weekly_groceries_usd if weekly_groceries_usd > 0 else 0
+    months_rent = cost_usd / monthly_rent_usd if monthly_rent_usd > 0 else 0
+    big_macs = cost_usd / big_mac if big_mac > 0 else 0
+    
+    return {
+        "weeks_groceries": float(weeks_groceries),
+        "months_rent": float(months_rent),
+        "big_macs": int(big_macs)
+    }
+
+def calculate_conversion_loss_factor(exchange_rates):
         if isinstance(rate_data, dict):
             rate = rate_data.get("base", 1.0)
             bonus = rate_data.get("bonus", 0.0)

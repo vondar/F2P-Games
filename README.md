@@ -32,7 +32,7 @@ project/
 │   ├── metrics/
 │   │   ├── risk_metrics.py  # CTE, WRR, Safety Net Tax
 │   │   ├── retention.py     # SRI, OCA, Recovery Interest
-│   │   ├── friction.py      # IG, Top-Up Pressure, LAI (Sunk Cost)
+│   │   ├── friction.py      # IG, Top-Up Pressure, LAI (Sunk Cost Trap)
 │   │   └── utility_decay.py # Meta-Relevance & Subscription Equivalence
 │   ├── analysis/
 │   │   ├── sensitivity.py   # Delta-Risk & Pity-Start sweeps
@@ -41,7 +41,8 @@ project/
 │   │   ├── config_loader.py # JSON Schema validation for configs
 │   │   ├── reporter.py      # Forensic reporting engine
 │   │   ├── fact_sheet.py    # Standardized PDF/A-ready export
-│   │   └── community_ingestor.py # Observed data ingestion
+│   │   ├── community_ingestor.py # Observed data ingestion
+│   │   └── translator.py    # MBA-to-Noob translation layer
 │   ├── app.py               # Streamlit Forensic Dashboard
 │   ├── run_analysis.py      # CLI runner for monetization analysis
 │   └── run_sensitivity.py   # CLI runner for visualization & sweeps
@@ -128,32 +129,33 @@ uv run main.py audit
 
 ### Module 1: Tail Risk (CTE₉₅ & WRR)
 Instead of "Average Cost," we focus on **Asymmetric Variance Exposure**:
-- **CTE₉₅:** Average cost for the "unlucky" 5%.
-- **WRR (Whale Revenue Ratio):** $CTE_{95} / \text{Median}$. Quantifies revenue reliance on extreme outliers.
-- **Safety Net Tax (SNT):** Quantifies the premium players pay for the variance protection of pity systems.
+- **CTE₉₅ (The Nightmare Scenario):** Average cost for the "unlucky" 5%.
+- **WRR (The Unlucky Tax):** $CTE_{95} / \text{Median}$. Quantifies revenue reliance on extreme outliers.
+- **Safety Net Tax (The Hidden Pity Cost):** Quantifies the premium players pay for the variance protection of pity systems.
 - **Transparency Trap (Sensitivity Sweep):** Automated audit for systems with undisclosed or ultra-low rates to show how tail risk explodes without transparency.
 - **Utility Decay:** Translates one-time purchases into a daily **Meta-Relevance Cost**, showing the "subscription equivalent" of items that power-creep over time.
-- **Forensic Reporting:** Generates human-readable Markdown reports and **Standardized Fact Sheets** contextualizing costs as **Days of Median Labor** and **Big Mac Equivalents** across global regions.
+- **Forensic Reporting:** Generates human-readable Markdown reports and **Standardized Fact Sheets** contextualizing costs using **Grocery Math**, **Months of Rent**, and **Big Mac Equivalents** across global regions.
 
 ### Module 3: Friction & Obfuscation
 - **Incentive Gap (IG):** Measures forced surplus spending by comparing required costs to available currency packs.
 - **Top-Up Pressure Index:** Quantifies the "residual utility" trap—the forced additional spend required to use up leftover currency balances.
-- **Loss Aversion Index (LAI):** Quantifies the psychological sunk cost of **Multi-Stage Acquisition** (Shards/Tokens).
+- **The Sunk Cost Trap (LAI):** Quantifies the psychological sunk cost of **Multi-Stage Acquisition** (Shards/Tokens) with visceral warnings.
 - **Bonus Obfuscation:** Quantifies the cognitive load added by "Bonus" currency math, making real-time financial assessment harder.
 
 ---
 
 ## Forensic Dashboard
 The **Streamlit Forensic Dashboard** provides a high-visibility interface for:
-- **Interactive CDF Analysis:** Visualize the probability of success vs. total cost.
-- **Economic Pain Index:** Translate virtual costs into working days and **Big Mac Equivalents** adjusted for **Purchasing Power Parity (PPP)**.
+- **Plain-English Verdicts**: Uses the MBA-to-Noob translation layer to immediately summarize predatory design or fair pricing at a glance.
+- **Interactive CDF Analysis (The Money Pit):** Visualize "The Coin Flip", "The Guarantee", and the shaded variance trap.
+- **Economic Pain Index & Life Clock:** Translate virtual costs into **Weeks of Groceries**, **Months of Rent**, and working days adjusted for **PPP**.
 - **Seasonal Portfolio Sim:** Quantify the probability of being unlucky across multiple banners in a single season.
-- **Transparency Grading:** Instant A-F grade for every banner based on weighted forensic metrics.
+- **Transparency Grading:** Instant A-F grade with human-centric subtitles for every banner.
 - **Transparency Trap Analysis:** Automated sensitivity sweep to expose the cost of undisclosed odds.
 - **Multi-Stage & Step-Up Acquisition:** Support for shards/tokens and variable trial costs/probabilities.
 - **Community Validation Engine:** Upload observed data to detect statistical discrepancies in published odds.
 - **Forensic Documentation:** Generate and download **Standardized Fact Sheets** directly from the UI.
-- **Psychological Pressure Simulation:** Toggle **Social Proof Bias** and **Loss Aversion** sliders to see how behavioral hacks affect perceived value.
+- **Psychological Pressure Simulation:** Toggle **Social Proof Bias** and **Sunk Cost Trap** sliders to see how behavioral hacks affect perceived value.
 - **State of the Tail Comparative Audit:** Side-by-side comparison of major F2P titles.
 
 ---

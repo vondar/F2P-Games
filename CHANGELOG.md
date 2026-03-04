@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-03-04
+
+### Added
+- **MBA-to-Noob Translation Layer**: Translated technical metrics into plain English (e.g., "95% Confidence Budget" -> "The 'Safe' Budget", "WRR" -> "The Unlucky Tax") via `src/utils/translator.py`.
+- **Luck-o-Meter**: Added gauge charts for WRR and SNT to provide a visual hierarchy of fairness.
+- **Annotated Confidence Curve**: Enhanced CDF plot with marked "The Coin Flip" and "The Guarantee" points, highlighting "The Money Pit" variance trap.
+- **Grocery Math & Life Clock**: Contextualized labor costs using "Weeks of Groceries" and "Months of Rent" equivalents, with a 1-year progress bar visual.
+- **Sunk Cost Trap**: Renamed Loss Aversion Index (LAI) in the UI and added a visceral warning mechanic for players deep into partial progress.
+- **Forensic Summary Box**: Added a plain-English "Verdict" box summarizing the banner's risk profile at the top of the dashboard.
+
 ## [0.1.0] - 2026-03-02
 
 ### Added
