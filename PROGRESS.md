@@ -81,6 +81,7 @@ This document tracks the implementation progress, encountered problems, and solu
 - [x] Annotate CDF Confidence Curve to highlight **The Money Pit** and explicit guarantees
 - [x] Implement **Grocery Math** & **Life Clock** for visceral labor cost contextualization
 - [x] Transition Loss Aversion Index (LAI) UI into the **Sunk Cost Trap** with dynamic warnings
+- [x] Overhaul Dashboard Sidebar into a "Three-Tier" hierarchy with an Advanced Forensic Lab expander
 
 ## Problems & Solutions
 

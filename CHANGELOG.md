@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.0] - 2026-03-04
 
 ### Added
+- **Dashboard Sidebar Overhaul**: Reorganized the Streamlit sidebar into a "Three-Tier" structure (Selection, Presets, Scenarios) and hid advanced inputs inside an "Advanced Forensic Lab" expander.
 - **MBA-to-Noob Translation Layer**: Translated technical metrics into plain English (e.g., "95% Confidence Budget" -> "The 'Safe' Budget", "WRR" -> "The Unlucky Tax") via `src/utils/translator.py`.
 - **Luck-o-Meter**: Added gauge charts for WRR and SNT to provide a visual hierarchy of fairness.
 - **Annotated Confidence Curve**: Enhanced CDF plot with marked "The Coin Flip" and "The Guarantee" points, highlighting "The Money Pit" variance trap.

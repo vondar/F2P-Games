@@ -25,8 +25,8 @@ This dashboard visualizes the **Consequences** of mobile F2P loot systems.
 It moves beyond 'Average Cost' to show the **Safe Budget** and **Unlucky Tax** paid by real players.
 """)
 
-# --- Sidebar: Configuration ---
-st.sidebar.header("System Configuration")
+# --- Tier 1: Selection ---
+st.sidebar.header("🔍 Audit Target")
 
 # Load available configs
 config_dir = "data/loot_configs/"
@@ -36,26 +36,44 @@ selected_config_file = st.sidebar.selectbox("Select Banner Config", available_co
 # Load geo configs
 with open("data/geo_configs.json", "r") as f:
     geo_data = json.load(f)
+    
+config = load_loot_config(os.path.join(config_dir, selected_config_file))
+
+# --- Tier 2: Presets (The "Noob" path) ---
+st.sidebar.subheader("👤 Player Profile")
+profile = st.sidebar.radio(
+    "How much do you plan to spend?",
+    ["F2P / Low Spender", "Average Player", "Target: Acquisition"]
+)
+
+# --- Tier 3: The Scenarios ---
+st.sidebar.subheader("🎭 Behavioral Scenarios")
+social_proof = st.sidebar.toggle("Simulate 'Winner Ticker' Bias", help="Models how seeing other people win tricks your brain into thinking the odds are better.")
+rate_drift = st.sidebar.toggle("Test for Hidden Odds Nerfs", help="Simulates what happens if the game secretly lowers the odds for high-spenders. Calculates if you're paying a 'Pity Tax' for the game's safety net.")
+show_raw_data = st.sidebar.toggle("Show Raw Forensic Data", help="Displays the unvarnished output table of the simulation.")
 
 # --- Community Validation Data ---
 st.sidebar.divider()
-st.sidebar.header("Community Validation")
-uploaded_file = st.sidebar.file_uploader("Upload Observed Pull Data (CSV/JSON)", type=['csv', 'json'])
+st.sidebar.header("🕵️ Community Validation")
+uploaded_file = st.sidebar.file_uploader("Upload Observed Pull Data", type=['csv', 'json'], help="Upload a CSV of pulled data from Reddit to mathematically double-check the 'Published Drop Rate'.")
 
-# --- Simulation & Core Metrics ---
-config = load_loot_config(os.path.join(config_dir, selected_config_file))
+# --- Tier 4: The Scary Knobs (Hidden by default) ---
+with st.sidebar.expander("⚙️ Advanced Forensic Lab"):
+    st.info("⚠️ Only touch these if you know your way around a CDF curve.")
+    
+    base_prob_val = float(config.get("base_prob", 0.01))
+    base_prob = st.slider("Published Drop Rate", 0.000, 0.100, base_prob_val, format="%.4f", step=0.001, help="The odds the game claims.")
+    
+    threshold_val = config.get("acquisition_threshold", 1)
+    threshold = st.number_input("Tokens/Shards Required", min_value=1, value=threshold_val, help="How many pieces do I need for the full item?")
+    
+    iterations = st.select_slider("Simulation Precision", options=[10000, 50000, 100000], value=50000, help="Low = Fast, High = Forensic accuracy. Smooths the tail variance.")
+    
+    cost_val = config.get("cost_per_pull_usd", 1.0)
+    cost_per_pull = st.number_input("Price per Try ($)", value=cost_val, help="The USD cost of a single pull. Derived from standardized currency pack Math.")
 
-base_prob_val = float(config.get("base_prob", 0.01))
-base_prob = st.sidebar.slider("Base Probability", 0.000, 0.100, base_prob_val, format="%.3f", step=0.001)
-threshold = st.sidebar.number_input("Acquisition Threshold (Shards)", min_value=1, value=config.get("acquisition_threshold", 1))
-iterations = st.sidebar.select_slider("Iterations", options=[10000, 50000, 100000], value=50000)
-cost_per_pull = st.sidebar.number_input("Cost per Pull ($)", value=config.get("cost_per_pull_usd", 1.0))
-
-social_proof = st.sidebar.toggle("Enable Social Proof Bias", help="Simulate perceived probability based on frequent global win announcements.")
-rate_drift = st.sidebar.toggle("Simulate Rate Drift (Anti-Forensic)", help="Simulate a scenario where p drops by 20% after 50 trials to test Chi-Squared sensitivity.")
-show_raw_data = st.sidebar.checkbox("Show Raw Data", value=False)
-
-if st.sidebar.button("Run Forensic Analysis"):
+# --- The "Big Red Button" ---
+if st.sidebar.button("Run Forensic Analysis", type="primary", use_container_width=True):
     with st.spinner("Running Monte Carlo Simulations..."):
         # Apply Rate Drift if active
         effective_pity = config.get("pity_config")
